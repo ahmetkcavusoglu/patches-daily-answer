@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Answer — Game Solution</title>
-<meta name="description" content="Today's game answer and solution revealed.">
+<title>Patches Daily Answer — Game Solution</title>
+<meta name="description" content="Today's Patches game answer and solution revealed.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzI1NjNlYiIvPjx0ZXh0IHg9IjE2IiB5PSIyMyIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UDwvdGV4dD48L3N2Zz4=">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -72,6 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 90px;
   }
 
   .site-title {
@@ -108,22 +110,12 @@
   .ad-right { grid-area: ad-right; }
 
   .ad-sidebar-box {
-    width: 140px;
-    height: 600px;
-    background: var(--ad-bg);
-    border: 1px dashed var(--ad-border);
-    border-radius: 4px;
+    width: 160px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 12px;
   }
 
   /* ══ MAIN ══ */
@@ -134,6 +126,16 @@
     align-items: center;
     padding: 28px 20px;
     gap: 20px;
+  }
+
+  /* Mobile top ad (hidden on desktop) */
+  .ad-mobile-top {
+    display: none;
+    width: 100%;
+    max-width: 320px;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
   }
 
   .answer-card {
@@ -187,11 +189,18 @@
   .ad-mid {
     width: 100%;
     max-width: 468px;
-    height: 60px;
-    background: var(--ad-bg);
-    border: 1px dashed var(--ad-border);
-    border-radius: 4px;
+    min-height: 60px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile bottom ad (hidden on desktop) */
+  .ad-mobile-bottom {
+    display: none;
+    width: 100%;
+    max-width: 320px;
+    min-height: 50px;
     align-items: center;
     justify-content: center;
   }
@@ -226,12 +235,7 @@
     transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
 
-  .share-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: rgba(37,99,235,0.05);
-  }
-
+  .share-btn:hover { color: var(--accent); border-color: var(--accent); background: rgba(37,99,235,0.05); }
   .share-btn.twitter:hover  { color: #000; border-color: #000; background: rgba(0,0,0,0.04); }
   .share-btn.linkedin:hover { color: #0077b5; border-color: #0077b5; background: rgba(0,119,181,0.05); }
 
@@ -251,6 +255,7 @@
   .ad-bottom {
     width: 100%;
     max-width: 728px;
+    min-height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -263,13 +268,17 @@
     text-align: center;
   }
 
-  /* ══ RESPONSIVE ══ */
+  /* ══ RESPONSIVE / MOBILE ══ */
   @media (max-width: 700px) {
     .page {
       grid-template-columns: 1fr;
       grid-template-areas: "header" "main" "footer";
     }
     .ad-left, .ad-right { display: none; }
+    .ad-top { min-height: 50px; }
+    .ad-bottom { min-height: 50px; }
+    .ad-mobile-top, .ad-mobile-bottom { display: flex; }
+    .ad-mid { max-width: 320px; }
   }
 </style>
 </head>
@@ -291,7 +300,6 @@
       </script>
       <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
     </div>
-
     <h1 class="site-title">PATCHES DAILY ANSWER</h1>
     <p class="site-sub">Today's game solution</p>
     <div class="header-divider"></div>
@@ -316,13 +324,30 @@
   <!-- ═══ MAIN CONTENT ═══ -->
   <main>
 
+    <!-- Mobil üst reklam (320x50) -->
+    <div class="ad-mobile-top">
+      <script>
+        atOptions = {
+          'key' : 'd918e74ab10e2d95587277a05fb5f090',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
+    </div>
+
     <div class="answer-card">
       <div class="answer-card-header">
         <span class="label">✓ Answer Revealed</span>
         <span class="date" id="today-date"></span>
       </div>
       <div class="answer-img-wrap">
-        <img src="https://i.ibb.co/Xx96MYML/Ekran-g-r-nt-s-2026-03-24-134459.png" alt="Today's game answer">
+        <!--
+          Görsel yolu buraya — örn: src="answer.png"
+        -->
+        <img src="https://i.ibb.co/Xx96MYML/Ekran-g-r-nt-s-2026-03-24-134459.png" alt="Today's Patches game answer">
       </div>
     </div>
 
@@ -333,6 +358,20 @@
           'format' : 'iframe',
           'height' : 60,
           'width' : 468,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/04337be3b332c5cb936603f9c09239e7/invoke.js"></script>
+    </div>
+
+    <!-- Mobil alt reklam (320x50) -->
+    <div class="ad-mobile-bottom">
+      <script>
+        atOptions = {
+          'key' : '04337be3b332c5cb936603f9c09239e7',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
           'params' : {}
         };
       </script>
