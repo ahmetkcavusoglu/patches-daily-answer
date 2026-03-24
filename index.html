@@ -15,8 +15,6 @@
     --accent: #2563eb;
     --text: #1a1a1a;
     --muted: #9a9a9a;
-    --ad-bg: #efefeb;
-    --ad-border: #d8d8d0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,6 +24,7 @@
     color: var(--text);
     font-family: 'DM Mono', monospace;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   body::before {
@@ -41,7 +40,6 @@
     z-index: 0;
   }
 
-  /* ══ LAYOUT ══ */
   .page {
     position: relative;
     z-index: 1;
@@ -67,13 +65,26 @@
     gap: 12px;
   }
 
-  .ad-top {
-    width: 100%;
-    max-width: 728px;
+  /* Desktop header ad — gizlenir mobilde */
+  .ad-top-desktop {
+    width: 728px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 90px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Mobil header ad — gizlenir masaüstünde */
+  .ad-top-mobile {
+    display: none;
+    width: 320px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 
   .site-title {
@@ -99,7 +110,7 @@
     background: var(--border);
   }
 
-  /* ══ SIDEBAR ADS ══ */
+  /* ══ SIDEBARS ══ */
   .ad-sidebar {
     display: flex;
     align-items: flex-start;
@@ -111,11 +122,12 @@
 
   .ad-sidebar-box {
     width: 160px;
-    min-height: 600px;
+    height: 600px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   /* ══ MAIN ══ */
@@ -126,18 +138,6 @@
     align-items: center;
     padding: 28px 20px;
     gap: 20px;
-  }
-
-  /* Mobile top ad (hidden on desktop) */
-.ad-mobile-top {
-    display: none;
-    width: 100%;
-    max-width: 320px;
-    height: 50px;
-    min-height: 50px;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
   }
 
   .answer-card {
@@ -178,7 +178,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 300px;
+    min-height: 200px;
   }
 
   .answer-img-wrap img {
@@ -188,27 +188,26 @@
     object-fit: contain;
   }
 
-.ad-mid {
-    width: 100%;
-    max-width: 468px;
+  /* Desktop mid ad */
+  .ad-mid-desktop {
+    width: 468px;
     height: 60px;
-    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
-  /* Mobile bottom ad (hidden on desktop) */
-.ad-mobile-bottom {
+  /* Mobile mid ad */
+  .ad-mid-mobile {
     display: none;
-    width: 100%;
-    max-width: 320px;
+    width: 320px;
     height: 50px;
-    min-height: 50px;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   /* ══ SHARE ══ */
@@ -241,9 +240,9 @@
     transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
 
-  .share-btn:hover { color: var(--accent); border-color: var(--accent); background: rgba(37,99,235,0.05); }
-  .share-btn.twitter:hover  { color: #000; border-color: #000; background: rgba(0,0,0,0.04); }
-  .share-btn.linkedin:hover { color: #0077b5; border-color: #0077b5; background: rgba(0,119,181,0.05); }
+  .share-btn:hover           { color: var(--accent); border-color: var(--accent); background: rgba(37,99,235,0.05); }
+  .share-btn.twitter:hover   { color: #000; border-color: #000; background: rgba(0,0,0,0.04); }
+  .share-btn.linkedin:hover  { color: #0077b5; border-color: #0077b5; background: rgba(0,119,181,0.05); }
 
   /* ══ FOOTER ══ */
   footer {
@@ -258,13 +257,24 @@
     background: #fafaf8;
   }
 
-  .ad-bottom {
-    width: 100%;
-    max-width: 728px;
-    min-height: 90px;
+  .ad-bottom-desktop {
+    width: 728px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .ad-bottom-mobile {
+    display: none;
+    width: 320px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 
   .footer-text {
@@ -274,17 +284,26 @@
     text-align: center;
   }
 
-  /* ══ RESPONSIVE / MOBILE ══ */
+  /* ══ MOBILE ══ */
   @media (max-width: 700px) {
     .page {
       grid-template-columns: 1fr;
       grid-template-areas: "header" "main" "footer";
     }
+
     .ad-left, .ad-right { display: none; }
-    .ad-top { min-height: 50px; }
-    .ad-bottom { min-height: 50px; }
-    .ad-mobile-top, .ad-mobile-bottom { display: flex; }
-    .ad-mid { max-width: 320px; }
+
+    .ad-top-desktop    { display: none; }
+    .ad-top-mobile     { display: flex; }
+
+    .ad-mid-desktop    { display: none; }
+    .ad-mid-mobile     { display: flex; }
+
+    .ad-bottom-desktop { display: none; }
+    .ad-bottom-mobile  { display: flex; }
+
+    main { padding: 16px 12px; gap: 16px; }
+    header { padding: 16px 12px 0; }
   }
 </style>
 </head>
@@ -294,18 +313,17 @@
 
   <!-- ═══ HEADER ═══ -->
   <header>
-    <div class="ad-top">
-      <script>
-        atOptions = {
-          'key' : 'd918e74ab10e2d95587277a05fb5f090',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
+    <!-- Desktop: 728x90 -->
+    <div class="ad-top-desktop">
+      <script>atOptions = {'key':'d918e74ab10e2d95587277a05fb5f090','format':'iframe','height':90,'width':728,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
     </div>
+    <!-- Mobile: 320x50 -->
+    <div class="ad-top-mobile">
+      <script>atOptions = {'key':'209a582f2b829217fa2de8cd15498021','format':'iframe','height':50,'width':320,'params':{}};</script>
+      <script src="https://www.highperformanceformat.com/209a582f2b829217fa2de8cd15498021/invoke.js"></script>
+    </div>
+
     <h1 class="site-title">PATCHES DAILY ANSWER</h1>
     <p class="site-sub">Today's game solution</p>
     <div class="header-divider"></div>
@@ -314,15 +332,7 @@
   <!-- ═══ LEFT SIDEBAR ═══ -->
   <aside class="ad-sidebar ad-left">
     <div class="ad-sidebar-box">
-      <script>
-        atOptions = {
-          'key' : '209a582f2b829217fa2de8cd15498021',
-          'format' : 'iframe',
-          'height' : 600,
-          'width' : 160,
-          'params' : {}
-        };
-      </script>
+      <script>atOptions = {'key':'209a582f2b829217fa2de8cd15498021','format':'iframe','height':600,'width':160,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/209a582f2b829217fa2de8cd15498021/invoke.js"></script>
     </div>
   </aside>
@@ -330,65 +340,32 @@
   <!-- ═══ MAIN CONTENT ═══ -->
   <main>
 
-    <!-- Mobil üst reklam (320x50) -->
-    <div class="ad-mobile-top">
-      <script>
-        atOptions = {
-          'key' : 'd918e74ab10e2d95587277a05fb5f090',
-          'format' : 'iframe',
-          'height' : 50,
-          'width' : 320,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
-    </div>
-
     <div class="answer-card">
       <div class="answer-card-header">
         <span class="label">✓ Answer Revealed</span>
         <span class="date" id="today-date"></span>
       </div>
       <div class="answer-img-wrap">
-        <!--
-          Görsel yolu buraya — örn: src="answer.png"
-        -->
         <img src="https://i.ibb.co/Xx96MYML/Ekran-g-r-nt-s-2026-03-24-134459.png" alt="Today's Patches game answer">
       </div>
     </div>
 
-    <div class="ad-mid">
-      <script>
-        atOptions = {
-          'key' : '04337be3b332c5cb936603f9c09239e7',
-          'format' : 'iframe',
-          'height' : 60,
-          'width' : 468,
-          'params' : {}
-        };
-      </script>
+    <!-- Desktop: 468x60 -->
+    <div class="ad-mid-desktop">
+      <script>atOptions = {'key':'04337be3b332c5cb936603f9c09239e7','format':'iframe','height':60,'width':468,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/04337be3b332c5cb936603f9c09239e7/invoke.js"></script>
     </div>
-
-    <!-- Mobil alt reklam (320x50) -->
-    <div class="ad-mobile-bottom">
-      <script>
-        atOptions = {
-          'key' : '04337be3b332c5cb936603f9c09239e7',
-          'format' : 'iframe',
-          'height' : 50,
-          'width' : 320,
-          'params' : {}
-        };
-      </script>
+    <!-- Mobile: 320x50 -->
+    <div class="ad-mid-mobile">
+      <script>atOptions = {'key':'04337be3b332c5cb936603f9c09239e7','format':'iframe','height':50,'width':320,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/04337be3b332c5cb936603f9c09239e7/invoke.js"></script>
     </div>
 
     <div class="share-row">
       <span class="share-label">Share:</span>
-      <button class="share-btn twitter" onclick="shareTwitter()">𝕏 Twitter</button>
+      <button class="share-btn twitter"  onclick="shareTwitter()">𝕏 Twitter</button>
       <button class="share-btn linkedin" onclick="shareLinkedIn()">in LinkedIn</button>
-      <button class="share-btn" onclick="copyLink()">⎘ Copy Link</button>
+      <button class="share-btn"          onclick="copyLink()">⎘ Copy Link</button>
     </div>
 
   </main>
@@ -396,31 +373,21 @@
   <!-- ═══ RIGHT SIDEBAR ═══ -->
   <aside class="ad-sidebar ad-right">
     <div class="ad-sidebar-box">
-      <script>
-        atOptions = {
-          'key' : '209a582f2b829217fa2de8cd15498021',
-          'format' : 'iframe',
-          'height' : 600,
-          'width' : 160,
-          'params' : {}
-        };
-      </script>
+      <script>atOptions = {'key':'209a582f2b829217fa2de8cd15498021','format':'iframe','height':600,'width':160,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/209a582f2b829217fa2de8cd15498021/invoke.js"></script>
     </div>
   </aside>
 
   <!-- ═══ FOOTER ═══ -->
   <footer>
-    <div class="ad-bottom">
-      <script>
-        atOptions = {
-          'key' : 'd918e74ab10e2d95587277a05fb5f090',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
+    <!-- Desktop: 728x90 -->
+    <div class="ad-bottom-desktop">
+      <script>atOptions = {'key':'d918e74ab10e2d95587277a05fb5f090','format':'iframe','height':90,'width':728,'params':{}};</script>
+      <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
+    </div>
+    <!-- Mobile: 320x50 -->
+    <div class="ad-bottom-mobile">
+      <script>atOptions = {'key':'d918e74ab10e2d95587277a05fb5f090','format':'iframe','height':50,'width':320,'params':{}};</script>
       <script src="https://www.highperformanceformat.com/d918e74ab10e2d95587277a05fb5f090/invoke.js"></script>
     </div>
     <p class="footer-text">© 2025 Patches Daily Answer · All rights reserved</p>
