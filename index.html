@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Answer — Game Solution</title>
+<meta name="description" content="Today's game answer and solution revealed.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --panel: #161616;
+    --border: #272727;
+    --accent: #c8f135;
+    --text: #ebebeb;
+    --muted: #505050;
+    --ad-bg: #111;
+    --ad-border: #1e1e1e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ══ LAYOUT ══ */
+  .page {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 160px 1fr 160px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header  header  header"
+      "ad-left main    ad-right"
+      "footer  footer  footer";
+    min-height: 100vh;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ══ HEADER ══ */
+  header {
+    grid-area: header;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 0;
+    gap: 12px;
+  }
+
+  .ad-top {
+    width: 100%;
+    max-width: 728px;
+    height: 90px;
+    background: var(--ad-bg);
+    border: 1px dashed var(--ad-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .site-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    line-height: 1;
+    margin-top: 10px;
+  }
+
+  .site-sub {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .header-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ══ SIDEBAR ADS ══ */
+  .ad-sidebar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 28px 8px;
+  }
+  .ad-left  { grid-area: ad-left; }
+  .ad-right { grid-area: ad-right; }
+
+  .ad-sidebar-box {
+    width: 140px;
+    height: 600px;
+    background: var(--ad-bg);
+    border: 1px dashed var(--ad-border);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .ad-sidebar-box span { opacity: 0.4; font-size: 1.2rem; }
+
+  /* ══ MAIN ══ */
+  main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px;
+    gap: 20px;
+  }
+
+  .answer-card {
+    width: 100%;
+    max-width: 600px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .answer-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .answer-card-header .label {
+    font-size: 0.63rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .answer-card-header .date {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .answer-img-wrap {
+    width: 100%;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+
+  /*
+    ┌─────────────────────────────────────────────────────┐
+    │  CHANGE src BELOW to your actual image filename.    │
+    │  Upload the image to the same folder as this HTML.  │
+    │  Example:  src="answer.png"  or  src="today.jpg"    │
+    └─────────────────────────────────────────────────────┘
+  */
+  .answer-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .ad-mid {
+    width: 100%;
+    max-width: 468px;
+    height: 60px;
+    background: var(--ad-bg);
+    border: 1px dashed var(--ad-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .share-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .share-label {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .share-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 7px 14px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .share-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ══ FOOTER ══ */
+  footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 10px;
+  }
+
+  .ad-bottom {
+    width: 100%;
+    max-width: 728px;
+    height: 90px;
+    background: var(--ad-bg);
+    border: 1px dashed var(--ad-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .footer-text {
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 700px) {
+    .page {
+      grid-template-columns: 1fr;
+      grid-template-areas: "header" "main" "footer";
+    }
+    .ad-left, .ad-right { display: none; }
+    .ad-top, .ad-bottom { height: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║  AD ZONE 1 — Leaderboard 728×90          ║
+      ║  Replace div with your ad network code   ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <div class="ad-top">[ Ad Zone 1 — 728×90 Leaderboard ]</div>
+
+    <h1 class="site-title">PATCHES DAILY ANSWER</h1>
+    <p class="site-sub">Today's game solution</p>
+    <div class="header-divider"></div>
+  </header>
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="ad-sidebar ad-left">
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║  AD ZONE 2 — Skyscraper 160×600          ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <div class="ad-sidebar-box">
+      <span>▣</span>
+      Ad Zone 2<br>160×600<br>Skyscraper
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main>
+
+    <div class="answer-card">
+      <div class="answer-card-header">
+        <span class="label">✓ Answer Revealed</span>
+        <span class="date" id="today-date"></span>
+      </div>
+      <div class="answer-img-wrap">
+        <!--
+          ┌────────────────────────────────────────────────┐
+          │  SET YOUR IMAGE PATH HERE                      │
+          │  Upload image to same folder → change src      │
+          │  e.g.  src="answer.png"                        │
+          └────────────────────────────────────────────────┘
+        -->
+        <img src="https://i.ibb.co/Xx96MYML/Ekran-g-r-nt-s-2026-03-24-134459.png" alt="Today's game answer">
+      </div>
+    </div>
+
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║  AD ZONE 3 — Banner 468×60               ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <div class="ad-mid">[ Ad Zone 3 — 468×60 Banner ]</div>
+
+    <div class="share-row">
+      <span class="share-label">Share:</span>
+      <button class="share-btn" onclick="shareTwitter()">𝕏 Twitter</button>
+      <button class="share-btn" onclick="copyLink()">⎘ Copy Link</button>
+    </div>
+
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR ═══ -->
+  <aside class="ad-sidebar ad-right">
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║  AD ZONE 4 — Skyscraper 160×600          ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <div class="ad-sidebar-box">
+      <span>▣</span>
+      Ad Zone 4<br>160×600<br>Skyscraper
+    </div>
+  </aside>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║  AD ZONE 5 — Leaderboard 728×90          ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <div class="ad-bottom">[ Ad Zone 5 — 728×90 Leaderboard ]</div>
+    <p class="footer-text">© 2025 Daily Answer · All rights reserved</p>
+  </footer>
+
+</div>
+
+<script>
+  // Auto date
+  const d = new Date();
+  document.getElementById('today-date').textContent =
+    d.toLocaleDateString('en-US', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
+
+  function shareTwitter() {
+    const url = encodeURIComponent(location.href);
+    window.open(`https://twitter.com/intent/tweet?text=Today%27s+answer+revealed!&url=${url}`, '_blank');
+  }
+
+  function copyLink() {
+    navigator.clipboard.writeText(location.href).then(() => alert('Link copied!'));
+  }
+</script>
+
+</body>
+</html>
